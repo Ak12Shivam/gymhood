@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gymshood - Smart Gym Access with Flexible Credits</title>
+    <meta name="description"
+        content="Pay for 30 days, get 30 workout credits. Never expires. Save 50% on gym memberships with Gymshood.">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💪</text></svg>">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #a855f7;
+            --dark: #0f172a;
+        }
+
+        * {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .hero-gradient {
+            background: radial-gradient(circle at top right, #4f46e5 0%, #7c3aed 40%, #0f172a 100%);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -5px rgba(99, 102, 241, 0.15);
+        }
+
+        .blob {
+            position: absolute;
+            filter: blur(40px);
+            z-index: -1;
+            opacity: 0.4;
+            animation: float 10s infinite ease-in-out;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(20px, -20px) scale(1.1);
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900 antialiased overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav border-b border-slate-200/50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
+                        <i class="fas fa-dumbbell text-lg"></i>
+                    </div>
+                    <span
+                        class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700">Gymshood</span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#how-it-works"
+                        class="text-slate-600 hover:text-indigo-600 font-medium transition-colors">How it Works</a>
+                    <a href="#features"
+                        class="text-slate-600 hover:text-indigo-600 font-medium transition-colors">Features</a>
+                    <a href="#video" class="text-slate-600 hover:text-indigo-600 font-medium transition-colors">Demo</a>
+                    <a href="index2.html" class="text-slate-600 hover:text-indigo-600 font-medium transition-colors">For
+                        Gyms</a>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <button class="text-slate-600 hover:text-indigo-600 font-medium px-4 py-2">Log in</button>
+                    <button
+                        class="bg-slate-900 text-white px-6 py-2.5 rounded-full font-medium hover:bg-slate-800 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                        Get App
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button class="text-slate-600 hover:text-indigo-600 p-2" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden bg-white border-t border-slate-100 absolute w-full" id="mobileMenu">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="#how-it-works"
+                    class="block px-3 py-3 text-slate-600 font-medium hover:bg-slate-50 rounded-lg">How it Works</a>
+                <a href="#features"
+                    class="block px-3 py-3 text-slate-600 font-medium hover:bg-slate-50 rounded-lg">Features</a>
+                <a href="#video"
+                    class="block px-3 py-3 text-slate-600 font-medium hover:bg-slate-50 rounded-lg">Demo</a>
+                <a href="index2.html"
+                    class="block px-3 py-3 text-slate-600 font-medium hover:bg-slate-50 rounded-lg">For Gyms</a>
+                <div class="pt-4 flex flex-col gap-3">
+                    <button class="w-full py-3 text-slate-600 font-medium border border-slate-200 rounded-xl">Log
+                        in</button>
+                    <button
+                        class="w-full py-3 bg-indigo-600 text-white font-medium rounded-xl shadow-lg shadow-indigo-500/30">Get
+                        App</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+            <div
+                class="absolute top-0 right-0 w-2/3 h-2/3 bg-purple-100/50 rounded-full blur-3xl -translate-y-1/4 translate-x-1/4">
+            </div>
+            <div
+                class="absolute bottom-0 left-0 w-1/2 h-1/2 bg-indigo-100/50 rounded-full blur-3xl translate-y-1/4 -translate-x-1/4">
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+                <div class="lg:w-1/2 text-center lg:text-left" data-aos="fade-up">
+                    <div
+                        class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 text-indigo-600 text-sm font-semibold mb-8 border border-indigo-100">
+                        <span class="relative flex h-2 w-2">
+                            <span
+                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                        </span>
+                        50% Average Savings vs Traditional Gyms
+                    </div>
+                    <h1 class="text-5xl lg:text-7xl font-bold leading-tight mb-6 text-slate-900">
+                        Smart Gym Access with <span class="text-gradient">Flexible Credits</span>
+                    </h1>
+                    <p class="text-xl text-slate-600 mb-8 leading-relaxed">
+                        Pay for 30 days, get 30 workout credits. Use them whenever you want. They never expire.
+                        Access 50+ partner gyms with one simple app.
+                    </p>
+
+                    <!-- Search Box -->
+                    <div
+                        class="bg-white p-2 rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 max-w-md mx-auto lg:mx-0 flex flex-col sm:flex-row gap-2">
+                        <div class="flex-1 relative">
+                            <i
+                                class="fas fa-map-marker-alt absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <input type="text" placeholder="Enter your location..."
+                                class="w-full pl-10 pr-4 py-3 rounded-xl outline-none text-slate-700 placeholder-slate-400">
+                        </div>
+                        <button
+                            class="bg-indigo-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-500/30">
+                            Find Gyms
+                        </button>
+                    </div>
+
+                    <div
+                        class="mt-8 flex items-center justify-center lg:justify-start gap-6 text-sm text-slate-500 font-medium">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-check-circle text-green-500"></i> No Contracts
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-check-circle text-green-500"></i> Cancel Anytime
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-check-circle text-green-500"></i> Instant Access
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Image/Visual -->
+                <div class="lg:w-1/2 relative" data-aos="fade-left" data-aos-delay="200">
+                    <div
+                        class="relative z-10 bg-white rounded-3xl shadow-2xl shadow-indigo-500/20 p-6 border border-slate-100 transform rotate-2 hover:rotate-0 transition-all duration-500">
+                        <!-- Mock UI of App -->
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <p class="text-sm text-slate-500">Current Balance</p>
+                                <h3 class="text-3xl font-bold text-slate-900">24 Credits</h3>
+                            </div>
+                            <div
+                                class="w-12 h-12 bg-indigo-50 rounded-full flex items-center justify-center text-indigo-600">
+                                <i class="fas fa-wallet text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4 p-4 bg-slate-50 rounded-xl border border-slate-100">
+                                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=100&h=100&fit=crop"
+                                    class="w-12 h-12 rounded-lg object-cover" alt="Gym">
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-slate-900">PowerHouse Gym</h4>
+                                    <p class="text-xs text-slate-500">Checked in • 1 Credit used</p>
+                                </div>
+                                <span class="text-green-500 text-sm font-bold">-1 Credit</span>
+                            </div>
+                            <div class="flex items-center gap-4 p-4 bg-slate-50 rounded-xl border border-slate-100">
+                                <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=100&h=100&fit=crop"
+                                    class="w-12 h-12 rounded-lg object-cover" alt="Gym">
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-slate-900">Elite Fitness</h4>
+                                    <p class="text-xs text-slate-500">Yesterday • 1 Credit used</p>
+                                </div>
+                                <span class="text-green-500 text-sm font-bold">-1 Credit</span>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-6 border-t border-slate-100 flex justify-between items-center">
+                            <p class="text-sm text-slate-500">Expires: <span
+                                    class="text-indigo-600 font-bold">NEVER</span></p>
+                            <button class="text-sm font-bold text-indigo-600 hover:text-indigo-700">Top up
+                                +</button>
+                        </div>
+                    </div>
+
+                    <!-- Floating Elements -->
+                    <div class="absolute -top-8 -right-8 bg-white p-4 rounded-2xl shadow-xl border border-slate-100 animate-bounce"
+                        style="animation-duration: 3s;">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-green-100 p-2 rounded-lg text-green-600">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-500 font-medium">Bank-Level</p>
+                                <p class="text-sm font-bold text-slate-900">Security</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl border border-slate-100 animate-bounce"
+                        style="animation-duration: 4s;">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-yellow-100 p-2 rounded-lg text-yellow-600">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-500 font-medium">App Store</p>
+                                <p class="text-sm font-bold text-slate-900">4.9 Rating</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-10 bg-white border-y border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div data-aos="fade-up" data-aos-delay="0">
+                    <h3 class="text-3xl lg:text-4xl font-bold text-slate-900 mb-1">50+</h3>
+                    <p class="text-slate-500 font-medium">Partner Gyms</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-3xl lg:text-4xl font-bold text-slate-900 mb-1">1k+</h3>
+                    <p class="text-slate-500 font-medium">Happy Users</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-3xl lg:text-4xl font-bold text-slate-900 mb-1">50%</h3>
+                    <p class="text-slate-500 font-medium">Avg. Savings</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="300">
+                    <h3 class="text-3xl lg:text-4xl font-bold text-slate-900 mb-1">4.9</h3>
+                    <p class="text-slate-500 font-medium">App Rating</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
+                <h2 class="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">How Gymshood Works</h2>
+                <p class="text-lg text-slate-600">Forget rigid memberships. Our credit system gives you the
+                    ultimate
+                    freedom to workout anywhere, anytime.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+                <!-- Connecting Line (Desktop) -->
+                <div
+                    class="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-indigo-200 to-transparent -z-1">
+                </div>
+
+                <!-- Step 1 -->
+                <div class="relative bg-white p-8 rounded-3xl shadow-lg border border-slate-100 text-center card-hover"
+                    data-aos="fade-up" data-aos-delay="0">
+                    <div
+                        class="w-20 h-20 mx-auto bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 text-3xl mb-6 shadow-inner">
+                        <i class="fas fa-search-location"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">1. Browse Gyms</h3>
+                    <p class="text-slate-600">Explore 50+ top-rated gyms, yoga studios, and fitness centers in
+                        your
+                        area. View ratings and amenities.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative bg-white p-8 rounded-3xl shadow-lg border border-slate-100 text-center card-hover"
+                    data-aos="fade-up" data-aos-delay="100">
+                    <div
+                        class="w-20 h-20 mx-auto bg-purple-50 rounded-2xl flex items-center justify-center text-purple-600 text-3xl mb-6 shadow-inner">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">2. Buy Credits</h3>
+                    <p class="text-slate-600">Purchase a credit pack that suits you. 1 Credit = 1 Workout.
+                        Credits never
+                        expire, so you never lose money.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative bg-white p-8 rounded-3xl shadow-lg border border-slate-100 text-center card-hover"
+                    data-aos="fade-up" data-aos-delay="200">
+                    <div
+                        class="w-20 h-20 mx-auto bg-green-50 rounded-2xl flex items-center justify-center text-green-600 text-3xl mb-6 shadow-inner">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">3. Scan & Workout</h3>
+                    <p class="text-slate-600">Show your QR code at the gym entrance, scan in, and start your
+                        workout. It's that simple!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Demo Section -->
+    <section id="video" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-12" data-aos="fade-up">
+                <h2 class="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">See It In Action</h2>
+                <p class="text-lg text-slate-600">Watch how easy it is to find and book your next workout.</p>
+            </div>
+            <div class="relative max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-2xl" data-aos="zoom-in">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&modestbranding=1" title="Gymshood Demo"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <div class="lg:w-1/2" data-aos="fade-right">
+                    <h2 class="text-3xl lg:text-4xl font-bold text-slate-900 mb-6">Why Choose Gymshood?</h2>
+
+                    <div class="space-y-8">
+                        <div class="flex gap-4">
+                            <div
+                                class="flex-shrink-0 w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center text-indigo-600">
+                                <i class="fas fa-infinity text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-2">Credits Never Expire</h3>
+                                <p class="text-slate-600">Unlike traditional memberships that reset every month,
+                                    your Gymshood credits stay with you until you use them.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div
+                                class="flex-shrink-0 w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600">
+                                <i class="fas fa-piggy-bank text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-2">Save Money</h3>
+                                <p class="text-slate-600">Pay only for the days you workout. No wasted fees on
+                                    rest days or busy weeks. Save up to 50% annually.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div
+                                class="flex-shrink-0 w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-green-600">
+                                <i class="fas fa-dumbbell text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-2">Access Top Gyms</h3>
+                                <p class="text-slate-600">Train at the best fitness centers in your city. From
+                                    luxury clubs to hardcore gyms, we have it all.</p>
+                            </div>
+                        </div>
+
+                        <div class="pt-4">
+                            <p class="text-sm font-bold text-slate-500 mb-3 uppercase tracking-wider">Download
+                                App</p>
+                            <p class="text-slate-600 mb-4">Get the full experience. Book classes, track credits,
+                                and manage expenses. Available on iOS and Android.</p>
+                            <div class="flex flex-wrap gap-4">
+                                <button
+                                    class="bg-black text-white px-6 py-3 rounded-xl flex items-center space-x-3 hover:bg-slate-900 transition-all shadow-lg border border-slate-800">
+                                    <i class="fab fa-apple text-3xl"></i>
+                                    <div class="text-left">
+                                        <div class="text-xs text-slate-300">Download on the</div>
+                                        <div class="font-bold text-lg leading-none">App Store</div>
+                                    </div>
+                                </button>
+                                <button
+                                    class="bg-black text-white px-6 py-3 rounded-xl flex items-center space-x-3 hover:bg-slate-900 transition-all shadow-lg border border-slate-800">
+                                    <i class="fab fa-google-play text-2xl"></i>
+                                    <div class="text-left">
+                                        <div class="text-xs text-slate-300">GET IT ON</div>
+                                        <div class="font-bold text-lg leading-none">Google Play</div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile App Mockup -->
+                <div class="lg:w-1/2" data-aos="fade-left">
+                    <div
+                        class="relative w-64 h-[500px] bg-slate-900 rounded-[3rem] border-8 border-slate-900 shadow-2xl overflow-hidden mx-auto">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-slate-900 rounded-b-xl z-20">
+                        </div>
+                        <div class="w-full h-full bg-white relative">
+                            <!-- App Screen Content -->
+                            <div class="p-4 bg-indigo-600 text-white pt-12 pb-6 rounded-b-3xl">
+                                <div class="flex justify-between items-center mb-4">
+                                    <i class="fas fa-bars"></i>
+                                    <span class="font-bold">Gymshood</span>
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold">Hello, Rahul</h3>
+                                <p class="text-indigo-200">Let's workout today!</p>
+                            </div>
+                            <div class="p-4 space-y-4">
+                                <div class="bg-white shadow-lg rounded-xl p-4 border border-slate-100">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-slate-500 text-sm">Balance</span>
+                                        <span class="text-indigo-600 font-bold">Top up</span>
+                                    </div>
+                                    <div class="text-3xl font-bold text-slate-900">12 Credits</div>
+                                </div>
+                                <div class="text-sm font-bold text-slate-900">Nearby Gyms</div>
+                                <div class="flex gap-3 overflow-x-auto pb-2">
+                                    <div class="flex-shrink-0 w-32 h-32 bg-slate-200 rounded-xl"></div>
+                                    <div class="flex-shrink-0 w-32 h-32 bg-slate-200 rounded-xl"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-300 py-16 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-6">
+                        <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white">
+                            <i class="fas fa-dumbbell text-sm"></i>
+                        </div>
+                        <span class="text-xl font-bold text-white">Gymshood</span>
+                    </div>
+                    <p class="text-sm leading-relaxed mb-6">
+                        Smart gym access with flexible credits. The modern way to stay fit without breaking
+                        the
+                        bank.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition-all"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition-all"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition-all"><i
+                                class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-6">Company</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="hover:text-indigo-400 transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-indigo-400 transition-colors">Careers</a> <span
+                                class="text-xs bg-indigo-600 text-white px-2 py-0.5 rounded-full ml-2">Hiring</span>
+                        </li>
+                        <li><a href="#" class="hover:text-indigo-400 transition-colors">Press</a></li>
+                        <li><a href="#" class="hover:text-indigo-400 transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-6">Support</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="hover:text-indigo-400 transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-indigo-400 transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-indigo-400 transition-colors">Privacy Policy</a>
+                        </li>
+                        <li><a href="#" class="hover:text-indigo-400 transition-colors">Terms &
+                                Conditions</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-6">For Gyms</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="index2.html" class="hover:text-indigo-400 transition-colors">Partner with us</a>
+                        </li>
+                        <li><a href="#" class="hover:text-indigo-400 transition-colors">Gym Dashboard</a>
+                        </li>
+                        <li><a href="#" class="hover:text-indigo-400 transition-colors">Success Stories</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div
+                class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
+                <p>&copy; 2024 Gymshood. All rights reserved.</p>
+                <div class="flex items-center gap-2 text-slate-500">
+                    <i class="fas fa-lock"></i>
+                    <span>Secured with Bank-Level Encryption</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+        class="fixed bottom-8 right-8 bg-indigo-600 text-white w-12 h-12 rounded-full shadow-lg shadow-indigo-500/30 flex items-center justify-center translate-y-20 opacity-0 transition-all duration-300 z-40 hover:bg-indigo-700">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS Animation Library
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Navbar Scroll Effect & Scroll to Top Visibility
+        window.addEventListener('scroll', function () {
+            const navbar = document.getElementById('navbar');
+            const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+                navbar.classList.add('bg-white/90');
+            } else {
+                navbar.classList.remove('shadow-lg');
+                navbar.classList.remove('bg-white/90');
+            }
+
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.remove('translate-y-20', 'opacity-0');
+            } else {
+                scrollTopBtn.classList.add('translate-y-20', 'opacity-0');
+            }
+        });
+
+        // Smooth Scroll for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    // Close mobile menu if open
+                    document.getElementById('mobileMenu').classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
