@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Your Gym - Gymshood</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style type="text/tailwindcss">
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+        * {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .step-active {
+            @apply bg-indigo-600 text-white border-indigo-600;
+        }
+
+        .step-completed {
+            @apply bg-green-500 text-white border-green-500;
+        }
+
+        .step-inactive {
+            @apply bg-white text-slate-400 border-slate-200;
+        }
+
+        /* Custom Checkbox for Facilities */
+        .facility-checkbox:checked+div {
+            @apply border-indigo-600 bg-indigo-50 text-indigo-700;
+        }
+
+        .facility-checkbox:checked+div i {
+            @apply text-indigo-600;
+        }
+
+        /* Custom Radio for Gym Type */
+        .gym-type-radio:checked+div {
+            @apply border-indigo-600 bg-indigo-50 ring-2 ring-indigo-600 ring-offset-2;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 min-h-screen pb-20">
+    <!-- Navbar -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div
+                    class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center text-white">
+                    <i class="fas fa-dumbbell text-sm"></i>
+                </div>
+                <span class="font-bold text-slate-900">Gymshood</span>
+            </div>
+            <button class="text-slate-500 hover:text-slate-900 text-sm font-medium">Save & Exit</button>
+        </div>
+    </nav>
+
+    <div class="max-w-3xl mx-auto px-4 mt-8">
+        <!-- Progress Bar -->
+        <div class="mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-sm font-bold text-slate-900" id="step-label">Step 1 of 5</span>
+                <span class="text-sm text-slate-500 font-medium" id="step-name">Basic Info</span>
+            </div>
+            <div class="h-2 bg-slate-200 rounded-full overflow-hidden">
+                <div class="h-full bg-indigo-600 transition-all duration-500 ease-out" id="progress-bar"
+                    style="width: 20%"></div>
+            </div>
+        </div>
+
+        <!-- Form Container -->
+        <form id="gym-registration-form"
+            class="glass rounded-3xl shadow-xl border border-slate-200 p-6 md:p-10 relative overflow-hidden">
+
+            <!-- Step 1: Basic Information -->
+            <div class="step-content" id="step-1">
+                <h2 class="text-2xl font-bold text-slate-900 mb-6">Basic Gym Information</h2>
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-2">Gym Name</label>
+                        <input type="text"
+                            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+                            placeholder="e.g. Iron Paradise Fitness">
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Owner / Manager Name</label>
+                            <input type="text"
+                                class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+                                placeholder="Full Name">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Business Email</label>
+                            <input type="email"
+                                class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+                                placeholder="gym@business.com">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Contact Number</label>
+                            <input type="tel"
+                                class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+                                placeholder="+91 98765 43210">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Alternate Number <span
+                                    class="text-slate-400 font-normal">(Optional)</span></label>
+                            <input type="tel"
+                                class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+                                placeholder="+91">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-2">Full Gym Address</label>
+                        <textarea rows="3"
+                            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+                            placeholder="Street, Area, City, Pincode"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-2">Google Map Link</label>
+                        <div class="relative">
+                            <i
+                                class="fas fa-map-marker-alt absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <input type="url"
+                                class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+                                placeholder="https://maps.google.com/...">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-2">Website / Instagram <span
+                                class="text-slate-400 font-normal">(Optional)</span></label>
+                        <div class="relative">
+                            <i class="fab fa-instagram absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <input type="url"
+                                class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+                                placeholder="@yourgym">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Gym Type -->
+            <div class="step-content hidden" id="step-2">
+                <h2 class="text-2xl font-bold text-slate-900 mb-6">Gym Type & Category</h2>
+                <p class="text-slate-500 mb-6">Select the category that best describes your facility.</p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <label class="cursor-pointer group">
+                        <input type="radio" name="gym_type" class="gym-type-radio hidden" checked>
+                        <div
+                            class="p-6 rounded-2xl border border-slate-200 hover:border-indigo-300 transition-all bg-white h-full flex items-center gap-4">
+                            <div
+                                class="w-12 h-12 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <span class="font-bold text-slate-700 group-hover:text-indigo-700">Unisex Gym</span>
+                        </div>
+                    </label>
+
+                    <label class="cursor-pointer group">
+                        <input type="radio" name="gym_type" class="gym-type-radio hidden">
+                        <div
+                            class="p-6 rounded-2xl border border-slate-200 hover:border-indigo-300 transition-all bg-white h-full flex items-center gap-4">
+                            <div
+                                class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xl">
+                                <i class="fas fa-male"></i>
+                            </div>
+                            <span class="font-bold text-slate-700 group-hover:text-blue-700">Men Only</span>
+                        </div>
+                    </label>
+
+                    <label class="cursor-pointer group">
+                        <input type="radio" name="gym_type" class="gym-type-radio hidden">
+                        <div
+                            class="p-6 rounded-2xl border border-slate-200 hover:border-indigo-300 transition-all bg-white h-full flex items-center gap-4">
+                            <div
+                                class="w-12 h-12 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center text-xl">
+                                <i class="fas fa-female"></i>
+                            </div>
+                            <span class="font-bold text-slate-700 group-hover:text-pink-700">Women Only</span>
+                        </div>
+                    </label>
+
+                    <label class="cursor-pointer group">
+                        <input type="radio" name="gym_type" class="gym-type-radio hidden">
+                        <div
+                            class="p-6 rounded-2xl border border-slate-200 hover:border-indigo-300 transition-all bg-white h-full flex items-center gap-4">
+                            <div
+                                class="w-12 h-12 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-xl">
+                                <i class="fas fa-running"></i>
+                            </div>
+                            <span class="font-bold text-slate-700 group-hover:text-orange-700">Fitness Studio</span>
+                        </div>
+                    </label>
+
+                    <label class="cursor-pointer group">
+                        <input type="radio" name="gym_type" class="gym-type-radio hidden">
+                        <div
+                            class="p-6 rounded-2xl border border-slate-200 hover:border-indigo-300 transition-all bg-white h-full flex items-center gap-4">
+                            <div
+                                class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-xl">
+                                <i class="fas fa-dumbbell"></i>
+                            </div>
+                            <span class="font-bold text-slate-700 group-hover:text-red-700">CrossFit Box</span>
+                        </div>
+                    </label>
+
+                    <label class="cursor-pointer group">
+                        <input type="radio" name="gym_type" class="gym-type-radio hidden">
+                        <div
+                            class="p-6 rounded-2xl border border-slate-200 hover:border-indigo-300 transition-all bg-white h-full flex items-center gap-4">
+                            <div
+                                class="w-12 h-12 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center text-xl">
+                                <i class="fas fa-fist-raised"></i>
+                            </div>
+                            <span class="font-bold text-slate-700 group-hover:text-slate-900">MMA / Boxing</span>
+                        </div>
+                    </label>
+
+                    <label class="cursor-pointer group">
+                        <input type="radio" name="gym_type" class="gym-type-radio hidden">
+                        <div
+                            class="p-6 rounded-2xl border border-slate-200 hover:border-indigo-300 transition-all bg-white h-full flex items-center gap-4">
+                            <div
+                                class="w-12 h-12 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-xl">
+                                <i class="fas fa-spa"></i>
+                            </div>
+                            <span class="font-bold text-slate-700 group-hover:text-green-700">Yoga / Pilates</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Step 3: Facilities -->
+            <div class="step-content hidden" id="step-3">
+                <h2 class="text-2xl font-bold text-slate-900 mb-6">Facilities Available</h2>
+                <p class="text-slate-500 mb-6">Select all the amenities your gym offers.</p>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    <!-- Helper Function to generate checkboxes -->
+                    <label class="cursor-pointer">
+                        <input type="checkbox" class="facility-checkbox hidden">
+                        <div
+                            class="p-4 rounded-xl border border-slate-200 bg-white text-center hover:border-indigo-300 transition-all h-full flex flex-col items-center justify-center gap-2">
+                            <i class="fas fa-running text-2xl text-slate-400 mb-1"></i>
+                            <span class="text-sm font-bold text-slate-700">Cardio Machines</span>
+                        </div>
+                    </label>
+
+                    <label class="cursor-pointer">
+                        <input type="checkbox" class="facility-checkbox hidden">
+                        <div
+                            class="p-4 rounded-xl border border-slate-200 bg-white text-center hover:border-indigo-300 transition-all h-full flex flex-col items-center justify-center gap-2">
+                            <i class="fas fa-dumbbell text-2xl text-slate-400 mb-1"></i>
+                            <span class="text-sm font-bold text-slate-700">Strength Machines</span>
+                        </div>
+                    </label>
+
+                    <label class="cursor-pointer">
+                        <input type="checkbox" class="facility-checkbox hidden">
+                        <div
+                            class="p-4 rounded-xl border border-slate-200 bg-white text-center hover:border-indigo-300 transition-all h-full flex flex-col items-center justify-center gap-2">
+                            <i class="fas fa-weight-hanging text-2xl text-slate-400 mb-1"></i>
+                            <span class="text-sm font-bold text-slate-700">Free Weights</span>
+                        </div>
+                    </label>
+
+                    <label class="cursor-pointer">
+                        <input type="checkbox" class="facility-checkbox hidden">
+                        <div
+                            class="p-4 rounded-xl border border-slate-200 bg-white text-center hover:border-indigo-300 transition-all h-full flex flex-col items-center justify-center gap-2">
+                            <i class="fas fa-user-friends text-2xl text-slate-400 mb-1"></i>
+                            <span class="text-sm font-bold text-slate-700">Personal Trainers</span>
+                        </div>
+                    </label>
+
+                    <label class="cursor-pointer">
+                        <input type="checkbox" class="facility-checkbox hidden">
+                        <div
+                            class="p-4 rounded-xl border border-slate-200 bg-white text-center hover:border-indigo-300 transition-all h-full flex flex-col items-center justify-center gap-2">
+                            <i class="fas fa-hot-tub text-2xl text-slate-400 mb-1"></i>
+                            <span class="text-sm font-bold text-slate-700">Steam / Sauna</span>
+                        </div>
+                    </label>
+
+                    <label class="cursor-pointer">
+                        <input type="checkbox" class="facility-checkbox hidden">
+                        <div
+                            class="p-4 rounded-xl border border-slate-200 bg-white text-center hover:border-indigo-300 transition-all h-full flex flex-col items-center justify-center gap-2">
+                            <i class="fas fa-tshirt text-2xl text-slate-400 mb-1"></i>
+                            <span class="text-sm font-bold text-slate-700">Changing Rooms</span>
+                        </div>
+                    </label>
+
+                    <label class="cursor-pointer">
+                        <input type="checkbox" class="facility-checkbox hidden">
+                        <div
+                            class="p-4 rounded-xl border border-slate-200 bg-white text-center hover:border-indigo-300 transition-all h-full flex flex-col items-center justify-center gap-2">
+                            <i class="fas fa-lock text-2xl text-slate-400 mb-1"></i>
+                            <span class="text-sm font-bold text-slate-700">Lockers</span>
+                        </div>
+                    </label>
+
+                    <label class="cursor-pointer">
+                        <input type="checkbox" class="facility-checkbox hidden">
+                        <div
+                            class="p-4 rounded-xl border border-slate-200 bg-white text-center hover:border-indigo-300 transition-all h-full flex flex-col items-center justify-center gap-2">
+                            <i class="fas fa-parking text-2xl text-slate-400 mb-1"></i>
+                            <span class="text-sm font-bold text-slate-700">Parking</span>
+                        </div>
+                    </label>
+
+                    <label class="cursor-pointer">
+                        <input type="checkbox" class="facility-checkbox hidden">
+                        <div
+                            class="p-4 rounded-xl border border-slate-200 bg-white text-center hover:border-indigo-300 transition-all h-full flex flex-col items-center justify-center gap-2">
+                            <i class="fas fa-shower text-2xl text-slate-400 mb-1"></i>
+                            <span class="text-sm font-bold text-slate-700">Shower Rooms</span>
+                        </div>
+                    </label>
+
+                    <label class="cursor-pointer">
+                        <input type="checkbox" class="facility-checkbox hidden">
+                        <div
+                            class="p-4 rounded-xl border border-slate-200 bg-white text-center hover:border-indigo-300 transition-all h-full flex flex-col items-center justify-center gap-2">
+                            <i class="fas fa-snowflake text-2xl text-slate-400 mb-1"></i>
+                            <span class="text-sm font-bold text-slate-700">AC Facility</span>
+                        </div>
+                    </label>
+
+                    <label class="cursor-pointer">
+                        <input type="checkbox" class="facility-checkbox hidden">
+                        <div
+                            class="p-4 rounded-xl border border-slate-200 bg-white text-center hover:border-indigo-300 transition-all h-full flex flex-col items-center justify-center gap-2">
+                            <i class="fas fa-users-cog text-2xl text-slate-400 mb-1"></i>
+                            <span class="text-sm font-bold text-slate-700">Group Classes</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Step 4: Photos Upload -->
+            <div class="step-content hidden" id="step-4">
+                <h2 class="text-2xl font-bold text-slate-900 mb-6">Photos Upload</h2>
+                <p class="text-slate-500 mb-6">Upload high-quality images to attract more customers.</p>
+
+                <div class="space-y-6">
+                    <!-- Upload Component -->
+                    <div
+                        class="border-2 border-dashed border-slate-300 rounded-2xl p-8 text-center hover:bg-slate-50 transition-colors cursor-pointer group">
+                        <div
+                            class="w-16 h-16 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-cloud-upload-alt text-2xl"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 mb-1">Gym Front Photo</h3>
+                        <p class="text-sm text-slate-500 mb-4">Drag & drop or click to upload</p>
+                        <input type="file" class="hidden">
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div
+                            class="border-2 border-dashed border-slate-300 rounded-2xl p-6 text-center hover:bg-slate-50 transition-colors cursor-pointer">
+                            <i class="fas fa-camera text-slate-400 text-xl mb-2"></i>
+                            <p class="text-sm font-bold text-slate-700">Reception Area</p>
+                        </div>
+                        <div
+                            class="border-2 border-dashed border-slate-300 rounded-2xl p-6 text-center hover:bg-slate-50 transition-colors cursor-pointer">
+                            <i class="fas fa-dumbbell text-slate-400 text-xl mb-2"></i>
+                            <p class="text-sm font-bold text-slate-700">Workout Floor</p>
+                        </div>
+                        <div
+                            class="border-2 border-dashed border-slate-300 rounded-2xl p-6 text-center hover:bg-slate-50 transition-colors cursor-pointer">
+                            <i class="fas fa-restroom text-slate-400 text-xl mb-2"></i>
+                            <p class="text-sm font-bold text-slate-700">Locker / Washroom</p>
+                        </div>
+                        <div
+                            class="border-2 border-dashed border-slate-300 rounded-2xl p-6 text-center hover:bg-slate-50 transition-colors cursor-pointer">
+                            <i class="fas fa-user-friends text-slate-400 text-xl mb-2"></i>
+                            <p class="text-sm font-bold text-slate-700">Trainer Team</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5: Documents -->
+            <div class="step-content hidden" id="step-5">
+                <h2 class="text-2xl font-bold text-slate-900 mb-6">Documents Required</h2>
+                <p class="text-slate-500 mb-6">Verify your business to get the "Verified Partner" badge.</p>
+
+                <div class="space-y-4">
+                    <div class="bg-white border border-slate-200 rounded-xl p-4 flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500">
+                                <i class="fas fa-file-contract"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Business Registration / GST</h4>
+                                <p class="text-xs text-slate-500">If available</p>
+                            </div>
+                        </div>
+                        <button type="button" class="text-indigo-600 font-bold text-sm hover:underline">Upload</button>
+                    </div>
+
+                    <div class="bg-white border border-slate-200 rounded-xl p-4 flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500">
+                                <i class="fas fa-id-card"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Owner ID Proof</h4>
+                                <p class="text-xs text-slate-500">Aadhaar / PAN / Driving License</p>
+                            </div>
+                        </div>
+                        <button type="button" class="text-indigo-600 font-bold text-sm hover:underline">Upload</button>
+                    </div>
+
+                    <div class="bg-white border border-slate-200 rounded-xl p-4 flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500">
+                                <i class="fas fa-certificate"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Gym Certification</h4>
+                                <p class="text-xs text-slate-500">Optional</p>
+                            </div>
+                        </div>
+                        <button type="button" class="text-indigo-600 font-bold text-sm hover:underline">Upload</button>
+                    </div>
+                </div>
+
+                <div class="mt-8 bg-indigo-50 rounded-xl p-4 flex gap-3">
+                    <i class="fas fa-shield-alt text-indigo-600 mt-1"></i>
+                    <div>
+                        <p class="font-medium text-slate-900">Documents are stored securely.</p>
+                        <p class="text-sm text-slate-600">We use industry standard measures to protect your business data.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success screen (hidden by default) -->
+            <div id="step-success" class="step-content hidden text-center p-8">
+                <h3 class="text-2xl font-bold text-slate-900">Registration Submitted</h3>
+                <p class="mt-2 text-slate-600">Thanks! We've received your details and will review them shortly.</p>
+                <div class="mt-4">
+                    <button type="button" onclick="window.location.href='/owner-dashboard'" class="bg-indigo-600 text-white px-6 py-2 rounded-lg">Go to Dashboard</button>
+                </div>
+            </div>
+
+            <!-- Navigation buttons -->
+            <div id="nav-buttons" class="flex items-center justify-between mt-8">
+                <button type="button" id="prev-btn" class="hidden bg-white border border-slate-200 px-4 py-2 rounded-lg">Previous</button>
+                <div class="flex gap-3">
+                    <button type="button" id="next-btn" class="bg-indigo-600 text-white px-6 py-2 rounded-lg">Next Step</button>
+                </div>
+            </div>
+
+        </form>
+
+            <script>
+                const stepNames = [
+                    "Basic Info",
+                    "Gym Type",
+                    "Facilities",
+                    "Photos",
+                    "Documents"
+                ];
+
+                const totalSteps = stepNames.length;
+                let currentStep = 1;
+
+                const prevBtn = document.getElementById('prev-btn');
+                const nextBtn = document.getElementById('next-btn');
+                const progressBar = document.getElementById('progress-bar');
+                const stepLabel = document.getElementById('step-label');
+                const stepName = document.getElementById('step-name');
+                const navButtons = document.getElementById('nav-buttons');
+
+                function updateStep() {
+                    document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));
+                    const current = document.getElementById(`step-${currentStep}`);
+                    if (current) current.classList.remove('hidden');
+
+                    const progress = (currentStep / totalSteps) * 100;
+                    if (progressBar) progressBar.style.width = `${progress}%`;
+
+                    if (stepLabel) stepLabel.innerText = `Step ${currentStep} of ${totalSteps}`;
+                    if (stepName) stepName.innerText = stepNames[currentStep - 1];
+
+                    if (currentStep === 1) {
+                        prevBtn.classList.add('hidden');
+                        nextBtn.innerText = "Next Step";
+                    } else if (currentStep === totalSteps) {
+                        prevBtn.classList.remove('hidden');
+                        nextBtn.innerText = "Submit Registration";
+                    } else {
+                        prevBtn.classList.remove('hidden');
+                        nextBtn.innerText = "Next Step";
+                    }
+
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+
+                nextBtn.addEventListener('click', () => {
+                    if (currentStep < totalSteps) { currentStep++; updateStep(); } else {
+                        document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));
+                        document.getElementById('step-success').classList.remove('hidden');
+                        navButtons.classList.add('hidden');
+                        const progressWrap = document.querySelector('.mb-8');
+                        if (progressWrap) progressWrap.classList.add('hidden');
+                    }
+                });
+
+                prevBtn.addEventListener('click', () => {
+                    if (currentStep > 1) { currentStep--; updateStep(); }
+                });
+
+                // Initialize
+                updateStep();
+            </script>
+
+        </div>
+    </div>
+</body>
+
+</html>

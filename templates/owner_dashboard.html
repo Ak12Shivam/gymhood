@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Dashboard - Gymshood</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style type="text/tailwindcss">
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+        * {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .sidebar-link.active {
+            @apply bg-indigo-50 text-indigo-600 border-r-4 border-indigo-600;
+        }
+
+        .sidebar-link:hover:not(.active) {
+            @apply bg-slate-50 text-slate-900;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 h-screen flex overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white border-r border-slate-200 flex flex-col z-20 hidden md:flex">
+        <div class="h-16 flex items-center px-6 border-b border-slate-200">
+            <div
+                class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center text-white mr-3">
+                <i class="fas fa-dumbbell text-sm"></i>
+            </div>
+            <span class="font-bold text-slate-900 text-lg">Gymshood</span>
+        </div>
+
+        <div class="flex-1 overflow-y-auto py-4">
+            <nav class="space-y-1">
+                <a href="#" onclick="showSection('overview')" id="nav-overview"
+                    class="sidebar-link active flex items-center px-6 py-3 text-slate-500 font-medium transition-all">
+                    <i class="fas fa-home w-6"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="#" onclick="showSection('profile')" id="nav-profile"
+                    class="sidebar-link flex items-center px-6 py-3 text-slate-500 font-medium transition-all">
+                    <i class="fas fa-building w-6"></i>
+                    <span>My Gym Profile</span>
+                </a>
+                <a href="#" onclick="showSection('revenue')" id="nav-revenue"
+                    class="sidebar-link flex items-center px-6 py-3 text-slate-500 font-medium transition-all">
+                    <i class="fas fa-chart-line w-6"></i>
+                    <span>Revenue Analytics</span>
+                </a>
+                <a href="#" onclick="showSection('plans')" id="nav-plans"
+                    class="sidebar-link flex items-center px-6 py-3 text-slate-500 font-medium transition-all">
+                    <i class="fas fa-tags w-6"></i>
+                    <span>Membership Plans</span>
+                </a>
+                <a href="#" onclick="showSection('announcements')" id="nav-announcements"
+                    class="sidebar-link flex items-center px-6 py-3 text-slate-500 font-medium transition-all">
+                    <i class="fas fa-bullhorn w-6"></i>
+                    <span>Announcements</span>
+                    <span class="ml-auto bg-red-100 text-red-600 text-xs font-bold px-2 py-0.5 rounded-full">2</span>
+                </a>
+            </nav>
+        </div>
+
+        <div class="p-4 border-t border-slate-200">
+            <button class="w-full flex items-center gap-3 font-medium text-sm text-indigo-600 hover:text-indigo-700">
+                <i class="fas fa-edit"></i>
+                <span>Edit Gym Profile</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col overflow-hidden">
+        <!-- Header -->
+        <div class="h-16 bg-white border-b border-slate-200 flex items-center px-8 z-10">
+            <h1 id="page-title" class="text-2xl font-bold text-slate-900">Dashboard Overview</h1>
+        </div>
+
+        <!-- Content -->
+        <div class="flex-1 overflow-y-auto p-8">
+
+        <!-- OVERVIEW SECTION -->
+        <div id="section-overview" class="section-content">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-slate-600 font-medium mb-1">Active Members</p>
+                            <h3 class="text-3xl font-bold text-slate-900">234</h3>
+                        </div>
+                        <div class="w-12 h-12 rounded-lg bg-indigo-50 flex items-center justify-center">
+                            <i class="fas fa-users text-indigo-600 text-lg"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-slate-600 font-medium mb-1">This Month Revenue</p>
+                            <h3 class="text-3xl font-bold text-slate-900">₹42,000</h3>
+                        </div>
+                        <div class="w-12 h-12 rounded-lg bg-green-50 flex items-center justify-center">
+                            <i class="fas fa-rupee-sign text-green-600 text-lg"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-slate-600 font-medium mb-1">Expiring Soon</p>
+                            <h3 class="text-3xl font-bold text-slate-900">12</h3>
+                        </div>
+                        <div class="w-12 h-12 rounded-lg bg-yellow-50 flex items-center justify-center">
+                            <i class="fas fa-exclamation-circle text-yellow-600 text-lg"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-slate-600 font-medium mb-1">Total Membership Plans</p>
+                            <h3 class="text-3xl font-bold text-slate-900">3</h3>
+                        </div>
+                        <div class="w-12 h-12 rounded-lg bg-purple-50 flex items-center justify-center">
+                            <i class="fas fa-tags text-purple-600 text-lg"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                <h3 class="text-lg font-bold text-slate-900 mb-4">Quick Actions</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <button class="p-4 rounded-lg border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all text-left">
+                        <i class="fas fa-plus text-indigo-600 mr-2"></i>
+                        <span class="font-medium text-slate-700">Add New Member</span>
+                    </button>
+                    <button class="p-4 rounded-lg border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all text-left">
+                        <i class="fas fa-bullhorn text-indigo-600 mr-2"></i>
+                        <span class="font-medium text-slate-700">Send Announcement</span>
+                    </button>
+                    <button class="p-4 rounded-lg border border-slate-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all text-left">
+                        <i class="fas fa-chart-line text-indigo-600 mr-2"></i>
+                        <span class="font-medium text-slate-700">View Analytics</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROFILE SECTION -->
+        <div id="section-profile" class="section-content hidden">
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="h-48 bg-gradient-to-r from-indigo-600 to-purple-600 relative">
+                    <button
+                        class="absolute top-4 right-4 bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-white/30 transition-all">
+                        <i class="fas fa-camera mr-2"></i> Change Cover
+                    </button>
+                </div>
+                <div class="px-8 pb-8">
+                    <div class="relative -mt-16 mb-6 flex justify-between items-end">
+                        <div class="w-32 h-32 rounded-2xl bg-white p-1 shadow-lg">
+                            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                                class="w-full h-full object-cover rounded-xl">
+                        </div>
+                        <button
+                            class="bg-indigo-600 text-white px-6 py-2.5 rounded-xl font-bold text-sm hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-500/30">
+                            Save Changes
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Gym Name</label>
+                                <input type="text" value="Iron Paradise Fitness"
+                                    class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Owner Name</label>
+                                <input type="text" value="John Doe"
+                                    class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Contact Number</label>
+                                <input type="text" value="+91 98765 43210"
+                                    class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">
+                            </div>
+                        </div>
+                        <div class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Address</label>
+                                <textarea rows="4"
+                                    class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none">123, Fitness Street, Koramangala, Bangalore - 560034</textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Facilities</label>
+                                <div class="flex flex-wrap gap-2">
+                                    <span
+                                        class="px-3 py-1 bg-indigo-50 text-indigo-700 rounded-lg text-xs font-bold">Cardio</span>
+                                    <span
+                                        class="px-3 py-1 bg-indigo-50 text-indigo-700 rounded-lg text-xs font-bold">Weights</span>
+                                    <span
+                                        class="px-3 py-1 bg-indigo-50 text-indigo-700 rounded-lg text-xs font-bold">Steam</span>
+                                    <span
+                                        class="px-3 py-1 bg-indigo-50 text-indigo-700 rounded-lg text-xs font-bold">Parking</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- REVENUE SECTION -->
+        <div id="section-revenue" class="section-content hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                <!-- Total Revenue Chart -->
+                <div class="lg:col-span-2 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="font-bold text-slate-900">Revenue Overview</h3>
+                        <select
+                            class="bg-slate-50 border border-slate-200 rounded-lg px-3 py-1 text-sm text-slate-600 outline-none">
+                            <option>This Year</option>
+                            <option>Last Year</option>
+                        </select>
+                    </div>
+                    <canvas id="revenueChart" height="200"></canvas>
+                </div>
+
+                <!-- Plan Performance -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <h3 class="font-bold text-slate-900 mb-6">Revenue by Plan</h3>
+                    <canvas id="planChart" height="250"></canvas>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="p-6 border-b border-slate-200">
+                    <h3 class="font-bold text-slate-900">Transaction History</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider">
+                                <th class="p-4 font-medium">Transaction ID</th>
+                                <th class="p-4 font-medium">User</th>
+                                <th class="p-4 font-medium">Plan</th>
+                                <th class="p-4 font-medium">Date</th>
+                                <th class="p-4 font-medium">Amount</th>
+                                <th class="p-4 font-medium">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm text-slate-700 divide-y divide-slate-100">
+                            <tr>
+                                <td class="p-4 font-mono text-slate-500">#TRX-8901</td>
+                                <td class="p-4 font-medium">Rahul Kumar</td>
+                                <td class="p-4">Gold Plan (3 Months)</td>
+                                <td class="p-4">Dec 01, 2025</td>
+                                <td class="p-4 font-bold">₹4,500</td>
+                                <td class="p-4"><span
+                                        class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-bold">Success</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-mono text-slate-500">#TRX-8902</td>
+                                <td class="p-4 font-medium">Sneha Reddy</td>
+                                <td class="p-4">Monthly Access</td>
+                                <td class="p-4">Nov 30, 2025</td>
+                                <td class="p-4 font-bold">₹1,500</td>
+                                <td class="p-4"><span
+                                        class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-bold">Success</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-mono text-slate-500">#TRX-8903</td>
+                                <td class="p-4 font-medium">Arjun Singh</td>
+                                <td class="p-4">Yearly Membership</td>
+                                <td class="p-4">Nov 28, 2025</td>
+                                <td class="p-4 font-bold">₹12,000</td>
+                                <td class="p-4"><span
+                                        class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-bold">Pending</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- PLANS SECTION -->
+        <div id="section-plans" class="section-content hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-slate-900">Membership Plans</h2>
+                <button
+                    class="bg-indigo-600 text-white px-4 py-2 rounded-xl font-bold text-sm hover:bg-indigo-700 transition-all flex items-center gap-2">
+                    <i class="fas fa-plus"></i> Add Plan
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Plan Card -->
+                <div
+                    class="bg-white rounded-2xl border border-slate-200 p-6 relative overflow-hidden group hover:border-indigo-300 transition-all">
+                    <div
+                        class="absolute top-0 right-0 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-bl-xl">
+                        Active</div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Monthly Access</h3>
+                    <div class="flex items-baseline gap-1 mb-4">
+                        <span class="text-3xl font-bold text-indigo-600">₹1,500</span>
+                        <span class="text-slate-500 text-sm">/month</span>
+                    </div>
+                    <ul class="space-y-2 mb-6 text-sm text-slate-600">
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Full Gym
+                            Access</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Cardio &
+                            Weights</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Locker
+                            Access</li>
+                    </ul>
+                    <div class="flex gap-3">
+                        <button
+                            class="flex-1 bg-slate-50 text-slate-700 py-2 rounded-lg font-bold text-sm hover:bg-slate-100">Edit</button>
+                        <button
+                            class="w-10 h-10 flex items-center justify-center rounded-lg bg-red-50 text-red-600 hover:bg-red-100"><i
+                                class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+
+                <!-- Plan Card -->
+                <div
+                    class="bg-white rounded-2xl border border-slate-200 p-6 relative overflow-hidden group hover:border-indigo-300 transition-all">
+                    <div
+                        class="absolute top-0 right-0 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-bl-xl">
+                        Active</div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Quarterly Gold</h3>
+                    <div class="flex items-baseline gap-1 mb-4">
+                        <span class="text-3xl font-bold text-indigo-600">₹4,500</span>
+                        <span class="text-slate-500 text-sm">/3 months</span>
+                    </div>
+                    <ul class="space-y-2 mb-6 text-sm text-slate-600">
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> All Monthly
+                            Features</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 1 Personal
+                            Session</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Diet
+                            Consultation</li>
+                    </ul>
+                    <div class="flex gap-3">
+                        <button
+                            class="flex-1 bg-slate-50 text-slate-700 py-2 rounded-lg font-bold text-sm hover:bg-slate-100">Edit</button>
+                        <button
+                            class="w-10 h-10 flex items-center justify-center rounded-lg bg-red-50 text-red-600 hover:bg-red-100"><i
+                                class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+
+                <!-- Add New Placeholder -->
+                <button
+                    class="border-2 border-dashed border-slate-300 rounded-2xl p-6 flex flex-col items-center justify-center text-slate-400 hover:bg-slate-50 hover:border-indigo-300 hover:text-indigo-600 transition-all h-full min-h-[250px]">
+                    <div
+                        class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mb-4 group-hover:bg-indigo-50">
+                        <i class="fas fa-plus text-xl"></i>
+                    </div>
+                    <span class="font-bold">Create New Plan</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ANNOUNCEMENTS SECTION -->
+        <div id="section-announcements" class="section-content hidden">
+            <h2 class="text-xl font-bold text-slate-900 mb-6">Announcements</h2>
+
+            <div class="space-y-4">
+                <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-6 relative">
+                    <span
+                        class="absolute top-4 right-4 text-xs font-bold text-indigo-600 bg-white px-2 py-1 rounded-lg shadow-sm">New</span>
+                    <div class="flex items-start gap-4">
+                        <div
+                            class="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-indigo-900 text-lg mb-2">Platform Maintenance Update</h3>
+                            <p class="text-indigo-800 text-sm mb-3">We will be performing scheduled maintenance on
+                                Dec 5th from 2 AM to 4 AM. During this time, the dashboard may be inaccessible.</p>
+                            <p class="text-xs text-indigo-600 font-medium">Posted by Admin • 2 hours ago</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-2xl p-6">
+                    <div class="flex items-start gap-4">
+                        <div
+                            class="w-10 h-10 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-lg mb-2">New Year Campaign</h3>
+                            <p class="text-slate-600 text-sm mb-3">Join our upcoming "New Year, New You" campaign to
+                                boost your January enrollments. Opt-in before Dec 20th.</p>
+                            <p class="text-xs text-slate-400 font-medium">Posted by Admin • 2 days ago</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </main>
+
+    <script>
+            // Section Navigation Logic
+            function showSection(sectionId) {
+                // Hide all sections
+                document.querySelectorAll('.section-content').forEach(el => el.classList.add('hidden'));
+                // Show selected section
+                document.getElementById(`section-${sectionId}`).classList.remove('hidden');
+
+                // Update Sidebar Active State
+                document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
+                document.getElementById(`nav-${sectionId}`).classList.add('active');
+
+                // Update Header Title
+                const titles = {
+                    'overview': 'Dashboard Overview',
+                    'profile': 'My Gym Profile',
+                    'revenue': 'Revenue Analytics',
+                    'plans': 'Membership Plans',
+                    'announcements': 'Announcements'
+                };
+                document.getElementById('page-title').innerText = titles[sectionId];
+            }
+
+            // Initialize Charts
+            const ctxRevenue = document.getElementById('revenueChart').getContext('2d');
+            new Chart(ctxRevenue, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'Revenue (₹)',
+                        data: [120000, 150000, 180000, 200000, 220000, 250000, 300000, 320000, 350000, 380000, 400000, 420000],
+                        borderColor: '#4f46e5',
+                        backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+
+            const ctxPlan = document.getElementById('planChart').getContext('2d');
+            new Chart(ctxPlan, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Monthly', 'Quarterly', 'Yearly', 'Daily Pass'],
+                    datasets: [{
+                        data: [45, 25, 20, 10],
+                        backgroundColor: ['#4f46e5', '#8b5cf6', '#ec4899', '#f97316']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+        </script>
+</body>
+
+</html>

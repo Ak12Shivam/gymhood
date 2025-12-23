@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Gymshood</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style type="text/tailwindcss">
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+        * {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .sidebar-link.active {
+            @apply bg-slate-900 text-white;
+        }
+
+        .sidebar-link:hover:not(.active) {
+            @apply bg-slate-100 text-slate-900;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-100 h-screen flex overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white border-r border-slate-200 flex flex-col z-20 hidden md:flex">
+        <div class="h-16 flex items-center px-6 border-b border-slate-200 bg-slate-900 text-white">
+            <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-white mr-3">
+                <i class="fas fa-shield-alt text-sm"></i>
+            </div>
+            <span class="font-bold text-lg">Admin Panel</span>
+        </div>
+
+        <div class="flex-1 overflow-y-auto py-4">
+            <nav class="space-y-1 px-3">
+                <a href="#" onclick="showSection('overview')" id="nav-overview"
+                    class="sidebar-link active flex items-center px-4 py-3 rounded-xl font-medium transition-all mb-1">
+                    <i class="fas fa-chart-pie w-6"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" onclick="showSection('gyms')" id="nav-gyms"
+                    class="sidebar-link flex items-center px-4 py-3 rounded-xl font-medium transition-all mb-1">
+                    <i class="fas fa-dumbbell w-6"></i>
+                    <span>Gym Partners</span>
+                </a>
+                <a href="#" onclick="showSection('revenue')" id="nav-revenue"
+                    class="sidebar-link flex items-center px-4 py-3 rounded-xl font-medium transition-all mb-1">
+                    <i class="fas fa-coins w-6"></i>
+                    <span>Revenue</span>
+                </a>
+                <a href="#" onclick="showSection('announcements')" id="nav-announcements"
+                    class="sidebar-link flex items-center px-4 py-3 rounded-xl font-medium transition-all mb-1">
+                    <i class="fas fa-bullhorn w-6"></i>
+                    <span>Announcements</span>
+                </a>
+            </nav>
+        </div>
+
+        <div class="p-4 border-t border-slate-200">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold">A
+                </div>
+                <div>
+                    <p class="text-sm font-bold text-slate-900">Super Admin</p>
+                    <p class="text-xs text-slate-500">admin@gymshood.com</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-screen overflow-hidden relative">
+        <!-- Header -->
+        <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 sm:px-8 z-10">
+            <h1 class="text-xl font-bold text-slate-900" id="page-title">Admin Dashboard</h1>
+            <div class="flex items-center gap-4">
+                <span class="text-xs font-bold bg-green-100 text-green-700 px-3 py-1 rounded-full">System Online</span>
+            </div>
+        </header>
+
+        <!-- Content Area -->
+        <div class="flex-1 overflow-y-auto p-4 sm:p-8" id="content-area">
+
+            <!-- OVERVIEW SECTION -->
+            <div id="section-overview" class="section-content">
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <h3 class="text-slate-500 text-sm font-medium mb-1">Total Gyms</h3>
+                        <p class="text-3xl font-bold text-slate-900">142</p>
+                        <span class="text-xs text-green-600 font-bold">+5 this week</span>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <h3 class="text-slate-500 text-sm font-medium mb-1">Total Users</h3>
+                        <p class="text-3xl font-bold text-slate-900">8,540</p>
+                        <span class="text-xs text-green-600 font-bold">+120 this week</span>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <h3 class="text-slate-500 text-sm font-medium mb-1">Total Revenue</h3>
+                        <p class="text-3xl font-bold text-slate-900">₹24.5L</p>
+                        <span class="text-xs text-green-600 font-bold">+15% vs last month</span>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <h3 class="text-slate-500 text-sm font-medium mb-1">Pending Verifications</h3>
+                        <p class="text-3xl font-bold text-orange-600">8</p>
+                        <span class="text-xs text-slate-500 font-bold">Action Required</span>
+                    </div>
+                </div>
+
+                <!-- Global Revenue Chart -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm mb-8">
+                    <h3 class="font-bold text-slate-900 mb-6">Platform Growth</h3>
+                    <canvas id="adminChart" height="100"></canvas>
+                </div>
+            </div>
+
+            <!-- GYMS SECTION -->
+            <div id="section-gyms" class="section-content hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold text-slate-900">Gym Partners Management</h2>
+                    <div class="flex gap-2">
+                        <input type="text" placeholder="Search gyms..."
+                            class="px-4 py-2 border border-slate-200 rounded-lg text-sm outline-none focus:border-indigo-500">
+                        <button class="bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-bold">Filter</button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider">
+                                <th class="p-4 font-medium">Gym Name</th>
+                                <th class="p-4 font-medium">Owner</th>
+                                <th class="p-4 font-medium">Location</th>
+                                <th class="p-4 font-medium">Status</th>
+                                <th class="p-4 font-medium">Joined</th>
+                                <th class="p-4 font-medium text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm text-slate-700 divide-y divide-slate-100">
+                            <tr>
+                                <td class="p-4 font-bold">Iron Paradise Fitness</td>
+                                <td class="p-4">John Doe</td>
+                                <td class="p-4">Koramangala</td>
+                                <td class="p-4"><span
+                                        class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-bold">Verified</span>
+                                </td>
+                                <td class="p-4">Dec 01, 2025</td>
+                                <td class="p-4 text-right">
+                                    <button
+                                        class="text-indigo-600 hover:text-indigo-800 font-medium text-xs">View</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold">Muscle Mania Gym</td>
+                                <td class="p-4">Suresh K</td>
+                                <td class="p-4">Indiranagar</td>
+                                <td class="p-4"><span
+                                        class="bg-orange-100 text-orange-700 px-2 py-1 rounded text-xs font-bold">Pending</span>
+                                </td>
+                                <td class="p-4">Nov 30, 2025</td>
+                                <td class="p-4 text-right">
+                                    <button
+                                        class="bg-green-600 text-white px-3 py-1 rounded text-xs font-bold hover:bg-green-700">Verify</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold">FitLife Studio</td>
+                                <td class="p-4">Anita R</td>
+                                <td class="p-4">HSR Layout</td>
+                                <td class="p-4"><span
+                                        class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-bold">Verified</span>
+                                </td>
+                                <td class="p-4">Nov 28, 2025</td>
+                                <td class="p-4 text-right">
+                                    <button
+                                        class="text-indigo-600 hover:text-indigo-800 font-medium text-xs">View</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- REVENUE SECTION -->
+            <div id="section-revenue" class="section-content hidden">
+                <h2 class="text-xl font-bold text-slate-900 mb-6">Global Revenue Analytics</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-slate-900 mb-4">Revenue by Gym Type</h3>
+                        <canvas id="gymTypeChart" height="200"></canvas>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-slate-900 mb-4">Top Performing Gyms</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-center justify-between">
+                                <span class="font-medium text-slate-700">1. Iron Paradise Fitness</span>
+                                <span class="font-bold text-slate-900">₹4.2L</span>
+                            </li>
+                            <li class="flex items-center justify-between">
+                                <span class="font-medium text-slate-700">2. FitLife Studio</span>
+                                <span class="font-bold text-slate-900">₹3.8L</span>
+                            </li>
+                            <li class="flex items-center justify-between">
+                                <span class="font-medium text-slate-700">3. Gold's Gym HSR</span>
+                                <span class="font-bold text-slate-900">₹3.5L</span>
+                            </li>
+                            <li class="flex items-center justify-between">
+                                <span class="font-medium text-slate-700">4. Cult.fit Indiranagar</span>
+                                <span class="font-bold text-slate-900">₹3.1L</span>
+                            </li>
+                            <li class="flex items-center justify-between">
+                                <span class="font-medium text-slate-700">5. Snap Fitness</span>
+                                <span class="font-bold text-slate-900">₹2.9L</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ANNOUNCEMENTS SECTION -->
+            <div id="section-announcements" class="section-content hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Create Form -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm h-fit">
+                        <h3 class="font-bold text-slate-900 mb-6">Create Announcement</h3>
+                        <form class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Title</label>
+                                <input type="text"
+                                    class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Message</label>
+                                <textarea rows="4"
+                                    class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Target Audience</label>
+                                <select
+                                    class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                                    <option>All Users</option>
+                                    <option>All Gym Owners</option>
+                                    <option>Specific Gyms</option>
+                                </select>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="push" class="rounded text-indigo-600">
+                                <label for="push" class="text-sm text-slate-700">Send Push Notification</label>
+                            </div>
+                            <button type="button"
+                                class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-slate-800 transition-all">Send
+                                Announcement</button>
+                        </form>
+                    </div>
+
+                    <!-- History -->
+                    <div class="lg:col-span-2 space-y-4">
+                        <h3 class="font-bold text-slate-900 mb-2">Announcement History</h3>
+
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-bold text-slate-900">Platform Maintenance Update</h4>
+                                <span class="text-xs text-slate-500">2 hours ago</span>
+                            </div>
+                            <p class="text-slate-600 text-sm mb-3">We will be performing scheduled maintenance on Dec
+                                5th from 2 AM to 4 AM.</p>
+                            <div class="flex items-center gap-4 text-xs font-medium text-slate-500">
+                                <span class="bg-slate-100 px-2 py-1 rounded">Target: All Users</span>
+                                <span><i class="fas fa-eye mr-1"></i> 1,240 Views</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-bold text-slate-900">New Year Campaign</h4>
+                                <span class="text-xs text-slate-500">2 days ago</span>
+                            </div>
+                            <p class="text-slate-600 text-sm mb-3">Join our upcoming "New Year, New You" campaign to
+                                boost your January enrollments.</p>
+                            <div class="flex items-center gap-4 text-xs font-medium text-slate-500">
+                                <span class="bg-slate-100 px-2 py-1 rounded">Target: Gym Owners</span>
+                                <span><i class="fas fa-eye mr-1"></i> 85 Views</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // Section Navigation Logic
+        function showSection(sectionId) {
+            document.querySelectorAll('.section-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`section-${sectionId}`).classList.remove('hidden');
+
+            document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
+            document.getElementById(`nav-${sectionId}`).classList.add('active');
+
+            const titles = {
+                'overview': 'Admin Dashboard',
+                'gyms': 'Gym Partners Management',
+                'revenue': 'Global Revenue Analytics',
+                'announcements': 'Announcements Management'
+            };
+            document.getElementById('page-title').innerText = titles[sectionId];
+        }
+
+        // Initialize Charts
+        const ctxAdmin = document.getElementById('adminChart').getContext('2d');
+        new Chart(ctxAdmin, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Total Revenue (₹)',
+                    data: [1500000, 1800000, 2100000, 2000000, 2400000, 2800000, 3200000, 3500000, 3800000, 4200000, 4500000, 4800000],
+                    backgroundColor: '#0f172a',
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        const ctxGymType = document.getElementById('gymTypeChart').getContext('2d');
+        new Chart(ctxGymType, {
+            type: 'pie',
+            data: {
+                labels: ['Unisex', 'CrossFit', 'Studio', 'Yoga', 'Others'],
+                datasets: [{
+                    data: [45, 20, 15, 10, 10],
+                    backgroundColor: ['#4f46e5', '#ef4444', '#f97316', '#22c55e', '#64748b']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
